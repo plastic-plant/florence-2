@@ -2,36 +2,38 @@ Last week, Microsoft's Azure AI team dropped **Florence-2** on Hugging Face. Let
 
 The model can handle a variety of vision tasks using a prompt-based representation. Should excel at tasks such as captioning, object detection, visual grounding and segmentation, performing on par or better than many large vision models out there. Comes in two sizes, with [Florence-2-large](https://huggingface.co/microsoft/Florence-2-large) as light as 1.54 GB finetuned for OCR.
 
-### python 1-tasks.py
+
+## Vision tasks with Florence-2
 
 Runs prompts for tasks Florence-2 model is capable of, requires CUDA Toolkit.
 
 1. Install CUDA Toolkit even if you don't use an NVIDIA GPU.
 ```
-    https://developer.nvidia.com/cuda-downloads (2.9 GB)
+   https://developer.nvidia.com/cuda-downloads (2.9 GB)
 ``` 	
 2. Install the following dependencies with pip or pip3:
 ```bash
-    sudo pip3 install Image transformers torch transformers datasets einops timm flash_attn
+   sudo pip3 install Image transformers torch transformers datasets einops timm flash_attn
 ```
 3. Clone the Florence-2-large. You'll need Git-LFS (https://git-lfs.github.com) to clone the binary in full.
 ```bash
-        cd florence-2
-        git lfs clone https://huggingface.co/microsoft/Florence-2-large
+   cd florence-2
+   git lfs clone https://huggingface.co/microsoft/Florence-2-large
 ```
 4. Run the script.
 ```bash
-    python3 1-tasks.py
+   python3 1-tasks.py
 ```
 
 Windows users installing FlashAttention-2 (flash_attn) may encounter the following errors. I suggest you save 
 yourself [some disappointment](https://github.com/Dao-AILab/flash-attention/issues/509) and simply run in WSL2. :-)
-
-- _CUDA_HOME environment variable is not set. Please set it to your CUDA install root._
-- __UserWarning: flash_attn was requested, but nvcc was not found.  Are you sure your environment has nvcc available?_
+```
+   - CUDA_HOME environment variable is not set. Please set it to your CUDA install root.
+   - UserWarning: flash_attn was requested, but nvcc was not found.  Are you sure your environment has nvcc available?
+```
 
 #### Output
-```json
+```
 Loading model florence-2-large...
 
 
@@ -80,5 +82,36 @@ Task 9: OCR with region
 {'<OCR_WITH_REGION>': {'quad_boxes': [[62.653499603271484, 10.54699993133545, 196.96949768066406, 10.54699993133545, 196.96949768066406, 38.80500030517578, 62.653499603271484, 38.80500030517578], [28.528499603271484, 48.755001068115234, 234.09750366210938, 48.755001068115234, 234.09750366210938, 78.6050033569336, 28.528499603271484, 78.6050033569336], [2.5935001373291016, 386.6570129394531, 163.3905029296875, 386.6570129394531, 163.3905029296875, 396.60699462890625, 2.5935001373291016, 396.60699462890625]], 'labels': ['</s>I CAN HAS', 'CHEEZBURGER?', 'ICANHASCHEEZEURGER.COM C']}}
 
 Done.
+```
+
+## Optical character recognition
+
+Prompts Florence-2 for `<OCR>` on a [folder of images](images/monarchs/) and writes to [text files](images/texts/) in the same folder.
+
+```bash
+   python 2-ocr.py
+```
+
+![Example picture with printed and handwritten text](images/monarchs/FrederickII.png?raw=true)
+
+#### Output
+```
+Loading model florence-2-large.
+OCR on a folder of images:
+
+images/monarchs/Charlemagne.png: Charlemagne, also known as Charles the Great, was King of the Franks and Lombards before becoming thefirst Holy Roman Emperor in 800. His reign is marked by the Carolinian Renaissance, a revival of art,culture, and learning based on classical models, which laid the foundations for medieval Europeancivilization.
+images/monarchs/Charlemagne.txt: saved.
+
+images/monarchs/Frederick II.png: Frederick II,KNOWN AS Frederick the Great,was King of Prussia who modernized the Prussian state and made it a majorEuropean power. He is celebrated for his military victories, patronage of thearts and philosophy, and his efforts to improve the legal and administrativesystems of Prussia, which set the stage for its rise in the 19th century.Source: Chal GPT + Patrick
+images/monarchs/Frederick II.txt: saved.
+
+images/monarchs/Henry VIII.png: Henry VIII was the King of England who is perhaps best known for his six marriages and his role in theseparation of the Church of England from the Roman Catholic Church. His reign was marked by significantchanges in religion, government, and society, including the dissolution of the monasteries and theestablishment of the Royal Navy.
+images/monarchs/Henry VIII.txt: saved.
+
+images/monarchs/Louis XIV.png: Known as the Sun King, Louis XIVreigned as King of France for 72years, the longest recorded of anymonarch in European history. Hisreign saw the expansion of frenchinfluence through a series of wars,the establishment of absolutemonarchy, and the construction ofthe opulent Palace of Versailles,symbolizing his power and grandeur.
+images/monarchs/Louis XIV.txt: saved.
+
+images/monarchs/William IV.png: William's House of Honoree in London, England in 1881. He was in 1882 in 1887. He married his children in 1818. In 1881, he married Princess Princess Princess Anne in 1884. The children in London in 1891 and 1891. He became a child in 1883. The child was born in London and became a princess in 1894. The mother of Queen Elizabeth II. The son of King George III. The Queen of England was born of England. The queen of England, the Queen of Scotland was born with her son of Great Britain.William's house of Honour in London. He succeeded his son of George II.The Queen's son of Britain. The King of England is born in England. He is born with his mother of England in England, and the Queen's mother of Scotland. The Prince of Wales was born to be born in Britain. William's son is born from England. His son of England and his mother is born to England. William was born from Britain.
+images/monarchs/William IV.txt: saved.
 ```
 
