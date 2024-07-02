@@ -5,9 +5,11 @@ The model can handle a variety of vision tasks using a prompt-based representati
 
 ## A. Vision tasks with Florence-2
 
-Runs prompts for tasks Florence-2 model is capable of, requires CUDA Toolkit.
+Runs prompts for tasks Florence-2 model is capable of. Requires Git-LFS and CUDA Toolkit.
 
-1. Install CUDA Toolkit even if you don't use an NVIDIA GPU.
+<details><summary>See step-by-step instructions</summary>
+
+1. Install CUDA Toolkit (even if you don't use an NVIDIA GPU).
 ```
    https://developer.nvidia.com/cuda-downloads (2.9 GB)
 ``` 	
@@ -21,16 +23,21 @@ Runs prompts for tasks Florence-2 model is capable of, requires CUDA Toolkit.
    git lfs clone https://huggingface.co/microsoft/Florence-2-large
 ```
 4. Run the script.
+</details>
+
 ```bash
    python 1-tasks.py
 ```
 
-Windows users installing FlashAttention-2 (flash_attn) may encounter the following errors. I suggest you save 
-yourself [some disappointment](https://github.com/Dao-AILab/flash-attention/issues/509) and simply run in WSL2. :-)
-```
-   - CUDA_HOME environment variable is not set. Please set it to your CUDA install root.
-   - UserWarning: flash_attn was requested, but nvcc was not found.  Are you sure your environment has nvcc available?
-```
+<details><summary>Notes for Windows users</summary>
+
+Windows users installing FlashAttention-2 (package `flash_attn`) may encounter the following errors. I suggest you save yourself [some disappointment](https://github.com/Dao-AILab/flash-attention/issues/509) and simply run in WSL2. :-)
+- CUDA_HOME environment variable is not set. Please set it to your CUDA install root.
+- UserWarning: flash_attn was requested, but nvcc was not found. Are you sure your environment has nvcc available?
+
+In Windows, you're used to `python` and `pip`. In most Linux distro, it's `python3` and `pip3`.
+
+</details>
 
 <details><summary>See example ouput</summary>
 
@@ -87,6 +94,7 @@ Done.
 ```
 </details>
 
+
 ## B. Optical character recognition
 
 Prompts Florence-2 for `<OCR>` on a [folder of images](images/monarchs/) and writes to [text files](images/texts/) in the same folder.
@@ -95,7 +103,7 @@ Prompts Florence-2 for `<OCR>` on a [folder of images](images/monarchs/) and wri
    python 2-ocr.py
 ```
 
-![Example picture with printed and handwritten text](images/monarchs/Frederick II.png?raw=true)
+![Example picture with a mix of printed and handwritten text](images/monarchs/Frederick%20II.png?raw=true)
 
 <details><summary>See example ouput</summary>
 
@@ -121,6 +129,7 @@ images/monarchs/William IV.txt: saved.
 ```
 
 </details>
+
 
 ## C. Retrieval-augmented generation
 
@@ -195,6 +204,32 @@ python 4-ask.py
 
 
    Let me know if you have any other questions!
+```
+
+</details>
+
+
+## D. Labels, boxes and descriptions
+
+Prompts Florence-2 for object detection on an image, then draws caption, description labels and bounding boxes with cv2 and bbv.
+
+```bash
+   pip install bbox-visualizer opencv-python
+   python 5-identify.py
+```
+
+Note how the cantaloupe melon is identified in `<MORE_DETAILED_CAPTION>` prompt, but not labelled by `<OD>` prompt. Also see how well the partial pear is recognised.
+
+![Example output image of fruit with caption, description, bounding boxes and labels](images/fruit/fruit-with-labels.jpg?raw=true)
+
+#### Output
+```
+   Loading model.
+   Prompting model for caption and description.
+   Prompting model for image object detection.
+   Found objects ['banana', 'grapes', 'orange', 'pear', 'pear'] with bounding boxes in fruit.jpg.
+   Drawing caption, description, bounding boxes and labels, saving to fruit-with-labels.jpg
+
 ```
 
 </details>
