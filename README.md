@@ -218,7 +218,7 @@ Prompts Florence-2 for object detection on an image, then draws caption, descrip
    python 5-identify.py
 ```
 
-Note how the cantaloupe melon is identified in `<MORE_DETAILED_CAPTION>` prompt, but not labelled by `<OD>` prompt. Also see how well the partial pear is recognised.
+Note how the cantaloupe melon is identified in `<MORE_DETAILED_CAPTION>` prompt, but not labelled by `<OD>` prompt. Also see how well the 'partial pear' is recognised.
 
 ![Example output image of fruit with caption, description, bounding boxes and labels](images/fruit/fruit-with-labels.jpg?raw=true)
 
@@ -237,12 +237,12 @@ Note how the cantaloupe melon is identified in `<MORE_DETAILED_CAPTION>` prompt,
 
 ## ONNX version
 
-Xenova uploaded a ONXX conversion of the torch model on the onnx-community repo. See [example code](https://huggingface.co/onnx-community/Florence-2-large), try out [Florence-2 demo with WebGPU](https://huggingface.co/spaces/Xenova/florence2-webgpu).
+Xenova uploaded a ONXX conversion of the torch model on the onnx-community repo.
+See [example code](https://huggingface.co/onnx-community/Florence-2-large), try out [Florence-2 demo online](https://huggingface.co/spaces/Xenova/florence2-webgpu) with WebGPU.
 
 ```bash
    cd florence-2
-   git lfs clone https://huggingface.co/microsoft/Florence-2-large
+   git lfs clone https://huggingface.co/onnx-community/Florence-2-large
 ```
 
-Use the ONNX model with [ML.net tutorial](https://learn.microsoft.com/en-us/dotnet/machine-learning/tutorials/object-detection-onnx).
-
+Use the ONNX model with [ML.net tutorial](https://learn.microsoft.com/en-us/dotnet/machine-learning/tutorials/object-detection-onnx). Commits quote [the lady with the lamp](https://en.wikipedia.org/wiki/Florence_Nightingale#The_Lady_with_the_Lamp).
